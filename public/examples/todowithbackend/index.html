@@ -1,0 +1,105 @@
+<script src="../../vender/angular.js"></script>
+<style type="text/css">
+  .todos{
+
+  }
+  .todos .done{
+    text-decoration: line-through;
+  }
+</style>
+<div ng-app="app">
+    <div ng-controller="TodoCtrl">
+      <h1>Todos:</h1>
+      <p>
+        <span>Total: {{ todos.length }} </span>
+        <span>Done: {{ completedTodos().length }}</span>
+      </p>
+      <ul class="todos">
+        <li ng-repeat="item in todos">
+          <span ng-class="{ done:item.done }">{{ item.text }}</span>
+
+          <input type="button" value="Remove" ng-click="removeTodo($index)">
+          <input type="button" value="{{ item.done? 'Undo' : 'done' }}" ng-click="finishTodo($index)">
+        </li>
+      </ul>
+      <p ng-if="loading">Loading</p>
+      <p ng-if="error">{{ error }}</p>
+      <form ng-submit="addTodo()">
+        <input type="text" ng-model="todoAdded">
+      </form>
+      <input type="button" value="Save All" ng-click="save()">
+    </div>
+</div>
+
+<script>
+  //define module
+  var app = angular.module('app', []);
+  //define controller
+  app.controller('TodoCtrl', function TodoCtrl($scope, TodoStore){
+    $scope.todos = [];
+    $scope.completedTodos = function(){
+      var items = [];
+      angular.forEach($scope.todos, function(todo){
+        todo.done && items.push(todo);
+      });
+      return items;
+    };
+    $scope.finishTodo = function($index){
+      var todo = $scope.todos[$index];
+      todo.done = !todo.done;
+    };
+    $scope.removeTodo = function($index){
+      $scope.todos.splice($index,1);
+    };
+    $scope.addTodo = function(){
+      var text = $scope.todoAdded;
+      if(text){
+        $scope.todos.push({ text : text,done: false });
+        $scope.todoAdded = '';//clear text
+      }
+    };
+
+    $scope.save = function(){
+      TodoStore.save($scope.todos).then(function(){
+        alert('Saved!');
+      }, handleError);
+    };
+
+    function clearError(){
+      $scope.error = null;
+    }
+
+    function handleError(err){
+      $scope.error = 'Something is wrong, please try again later!';
+    }
+
+    function fetch(){
+      clearError();
+      TodoStore.fetch()
+        .then(function(data){
+          $scope.todos = data ||[];
+        }, handleError);
+    }
+
+    fetch();
+  });
+
+  app.service('TodoStore', function($http){
+    var TODO_URL = '../../todos';
+    this.fetch = function(){
+      return $http.get(TODO_URL, null, {
+        params : {
+          t : new Date().getTime()
+        }
+      }).then(function(res){
+        return res.data;
+      });
+    };
+
+    this.save = function(data){
+      return $http.post(TODO_URL, data).then(function(res){
+        return res.data;
+      });
+    };
+  });
+</script>

@@ -1,0 +1,39 @@
+<script src="../../vender/angular.js"></script>
+
+<div ng-app="app">
+      <div ng-controller="TodoCtrl">
+        <div mail from="david" to="john" content="msg" on-send="sent()">
+        </div>
+      </div>
+</div>
+<script>
+  angular.module('app',[])
+  .controller('TodoCtrl', ['$scope', function TodoCtrl($scope){
+    $scope.msg = "Explicit injection";
+    $scope.sent = function(){
+      alert('mail sented');
+    };
+  }])
+  .directive('mail',[function(){
+    function link(scope,element, attr, ctrl){
+      element.on('click', function(){
+        alert('sending mail\r\n'+
+          'from ' + scope.from + '\r\n' +
+          'to ' + scope.to + '\r\n' +
+          'content\r\n---\r\n' + scope.content);
+
+        scope.sent && scope.sent();
+      });
+    }
+    return {
+      scope:{
+        from: '@',
+        to: '@',
+        content: '=',
+        sent: '&onSend'
+      },
+      link:link,
+      template: '<p>{{ content }}</p>'
+    };
+  }]);
+</script>

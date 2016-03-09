@@ -1,0 +1,23 @@
+<script src="../../vender/angular.js"></script>
+<div ng-app="app">
+    <div ng-controller="TodoCtrl">
+      A: <div my-click-count></div> <br>
+      C: <div class="my-click-count"></div> <br>
+      E: <my-click-count></my-click-count>
+    </div>
+</div>
+
+<script>
+  //define module
+  var app = angular.module('app', []);
+  //define controller
+  app.controller('TodoCtrl', function TodoCtrl($scope){
+    $scope.count = 10;
+  });
+  app.directive('myClickCount', function(){
+  return {
+    restrict: 'ACE',
+    template: '<p>{{ count }}</p>'
+  }
+});
+</script>

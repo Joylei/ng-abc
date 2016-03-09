@@ -1,0 +1,59 @@
+<script src="../../vender/angular.js"></script>
+<style type="text/css">
+  .todos{
+
+  }
+  .todos .done{
+    text-decoration: line-through;
+  }
+</style>
+<div ng-app="app">
+    <div ng-controller="TodoCtrl">
+      <h1>Todos:</h1>
+      <p>
+        <span>Total: {{ todos.length }} </span>
+        <span>Done: {{ completedTodos().length }}</span>
+      </p>
+      <ul class="todos">
+        <li ng-repeat="item in todos">
+          <span ng-class="{ done:item.done }">{{ item.text }}</span>
+
+          <input type="button" value="Remove" ng-click="removeTodo($index)">
+          <input type="button" value="{{ item.done? 'Undo' : 'done' }}" ng-click="finishTodo($index)">
+        </li>
+      </ul>
+      <form ng-submit="addTodo()">
+        <input type="text" ng-model="todoAdded">
+      </form>
+    </div>
+</div>
+
+<script>
+  //define module
+  var app = angular.module('app', []);
+  //define controller
+  app.controller('TodoCtrl', function TodoCtrl($scope){
+    $scope.todos = [];
+    $scope.completedTodos = function(){
+      var items = [];
+      angular.forEach($scope.todos, function(todo){
+        todo.done && items.push(todo);
+      });
+      return items;
+    };
+    $scope.finishTodo = function($index){
+      var todo = $scope.todos[$index];
+      todo.done = !todo.done;
+    };
+    $scope.removeTodo = function($index){
+      $scope.todos.splice($index,1);
+    };
+    $scope.addTodo = function(){
+      var text = $scope.todoAdded;
+      if(text){
+        $scope.todos.push({ text : text,done: false });
+        $scope.todoAdded = '';//clear text
+      }
+    };
+  });
+</script>

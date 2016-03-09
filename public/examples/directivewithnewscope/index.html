@@ -1,0 +1,35 @@
+<div ng-app="app">
+  <div ng-controller="TodoCtrl">
+    A: <div my-click-count></div> <br>
+    C: <div class="my-click-count"></div> <br>
+    E: <my-click-count></my-click-count>
+  </div>
+</div>
+<script src="../../vender/angular.js"></script>
+<script>
+  //define module
+  var app = angular.module('app', []);
+  //define controller
+  app.controller('TodoCtrl', function TodoCtrl($scope){
+    $scope.count = 10;
+  });
+  app.directive('myClickCount', function($log){
+    function link(scope, element, attrs){
+      $log.log('worked');
+      scope.count = 0;
+      element.on('click', function(){
+        scope.count++;
+        scope.$digest();
+      });
+
+      element.on('$destroy',function(){
+        element.off();
+      });
+    }
+    return {
+      scope:{},
+      template: '<p>{{ count }}</p>',
+      link: link
+    };
+  });
+</script>

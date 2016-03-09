@@ -1,0 +1,30 @@
+body {
+  margin: 0;
+  font-family: "myriad pro", "Tahoma", "sans-serif";
+}
+.live-editor {
+  display: block;
+  height: 100vh;
+  overflow: hidden;
+}
+.live-editor iframe {
+  display: inline-block;
+  vertical-align: top;
+  padding-left: 1em;
+  color: #333;
+  border: none;
+  height: 100vh;
+}
+.live-editor section {
+  height: 150px;
+}
+@media (min-width: 500px) {
+  .live-editor iframe {
+    width: 45%;
+  }
+  .live-editor section {
+    height: 100vh;
+    display: inline-block;
+    width: 50%;
+  }
+}

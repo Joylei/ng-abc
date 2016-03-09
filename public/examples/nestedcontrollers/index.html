@@ -1,0 +1,30 @@
+<script src="../../vender/angular.js"></script>
+
+<div ng-app="app">
+    <div ng-controller="TodoCtrl">
+      <h1>Todos: {{ todos.length }}</h1>
+      <div ng-repeat="item in todos">
+        <div ng-controller="TodoItemCtrl">
+          <span>{{ item.text }}</span>
+          <input type="button" value="click" ng-click="clickme()">
+        </div>
+      </div>
+    </div>
+</div>
+<script>
+  angular.module('app',[])
+  .controller('TodoCtrl', function TodoCtrl($scope){
+    $scope.todos = [
+      {text:'Wash Clothes', done: false},
+      {text: 'Call Mamu', done: false}
+    ];
+    $scope.clickme = function(){
+      console.log('TodoCtrl clickme');
+    };
+  })
+  .controller('TodoItemCtrl', function TodoItem($scope){
+    // $scope.clickme = function(){
+    //   console.log('TodoItemCtrl clickme');
+    // };
+  });
+</script>

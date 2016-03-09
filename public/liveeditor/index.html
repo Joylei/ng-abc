@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html ng-app="app">
+  <head>
+    <title>Angular live editor</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <div ng-controller="EditorCtrl">
+      <live-editor source="src">
+      </live-editor>
+    </div>
+    <!-- scripts we need -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.2/ace.js"></script>
+    <script src="../vender/angular.js"></script>
+    <script src="editor.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,72 @@
+<script src="../../vender/jquery.js"></script>
+<style type="text/css">
+  .todos{
+
+  }
+  .todos .done{
+    text-decoration: line-through;
+  }
+</style>
+<div>
+    <div class="todoApp">
+      <h1>Todos:</h1>
+      <p>
+        <span class="total-count">Total: 0 </span>
+        <span class="done-count">Done: 0</span>
+      </p>
+      <ul class="todos">
+      </ul>
+      <form>
+        <input type="text">
+      </form>
+    </div>
+</div>
+
+<script>
+  (function($){
+    function addTodo($todos, text){
+      var $li = $('<li><span></span>'
+      +'<input type="button" class="remove" value="Remove">'
+      +'<input type="button" class="finish" value="Done">'
+      +'</li>');
+      $li.find('span').text(text);
+      $todos.append($li);
+      $todos.trigger('todo-added');
+    }
+
+    function initApp(){
+      var $todos = $('ul.todos'),
+        $form = $('form'),
+        $todoAdd = $form.find('input'),
+        $totalCount = $('.total-count'),
+        $doneCount = $('.done-count');
+
+      $form.on('submit', function(e){
+        e.preventDefault();
+        var text = $todoAdd.val();
+        if(text){
+          addTodo($todos, text);
+          $todoAdd.val('');//clear text
+        }
+      });
+      $todos.on('click', '.remove',function(){
+        $(this).closest('li').remove();
+        $todos.trigger('todo-removed');
+      });
+      $todos.on('click', '.finish',function(){
+        var $holder = $(this).closest('li').find('span');
+        if($holder.hasClass('done')){
+          $holder.removeClass('done');
+        }else{
+          $holder.addClass('done');
+        }
+        $todos.trigger('todo-done');
+      });
+      $todos.on('todo-added todo-removed todo-done',function(){
+        $totalCount.text('Total: ' + $todos.find('li').length);
+        $doneCount.text('Done: ' + $todos.find('span.done').length);
+      });
+    }
+    $(document).ready(initApp);
+  })(jQuery);
+</script>

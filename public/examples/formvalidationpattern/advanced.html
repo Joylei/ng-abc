@@ -1,0 +1,26 @@
+<script src="../../vender/angular.js"></script>
+<div ng-app="app">
+  <form name="form" class="css-form" novalidate ng-controller="FormCtrl">
+    <div>
+      Size (integer 0 - 10):
+      <input type="number" ng-model="size" name="size"
+             min="0" max="10" ng-pattern="integer" />{{size}}<br />
+      <span ng-show="form.size.$error.pattern">
+        The value is not a valid number!
+      </span>
+      <span ng-show="form.size.$error.min || form.size.$error.max">
+        The value must be in range 0 to 10!</span>
+    </div>
+  </form>
+  <script>
+    angular.module('app',[])
+      .controller('FormCtrl', function($scope){
+        $scope.integer = {
+          test: function(value){
+            //more complex code here
+            return /^\d*$/.test(value);
+          }
+        };
+      });
+  </script>
+</div>

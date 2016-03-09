@@ -1,0 +1,14 @@
+<script src="../../vender/angular.js"></script>
+
+<div ng-app="app">
+      <div ng-controller="TodoCtrl">
+        {{ msg }}
+      </div>
+</div>
+<script>
+  angular.module('app',[])
+  .controller('TodoCtrl', function TodoCtrl($scope){
+    $scope.msg = "Hello";
+    //more code here
+  });
+</script>

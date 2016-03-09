@@ -1,0 +1,14 @@
+<script src="../../vender/angular.js"></script>
+
+<div ng-app="app">
+      <div ng-controller="TodoCtrl">
+        {{ msg }}
+      </div>
+</div>
+<script>
+  angular.module('app',[])
+  .controller('TodoCtrl', ['$scope', function TodoCtrl($scope){
+    $scope.msg = "Explicit injection";
+    //more code here
+  }]);
+</script>

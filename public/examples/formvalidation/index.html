@@ -1,0 +1,22 @@
+<script src="../../vender/angular.js"></script>
+<div ng-app>
+  <form name="form" class="css-form" novalidate>
+    <div>
+      Size (integer 0 - 10):
+      <input type="number" ng-model="size" name="size"
+             min="0" max="10"/>{{size}}<br />
+      <span ng-show="form.size.$error.number">
+        The value is not a valid number!
+      </span>
+      <span ng-show="form.size.$error.min || form.size.$error.max">
+        The value must be in range 0 to 10!</span>
+    </div>
+
+    <div>
+      Email:
+      <input type="email" ng-model="name" name="name" required />{{name}}<br />
+      <span ng-show="form.name.$error.email">Must be email</span>
+      <span ng-show="form.name.$error.required">Required</span>
+    </div>
+  </form>
+</div>

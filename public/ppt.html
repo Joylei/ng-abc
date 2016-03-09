@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Intro AngularJS</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body ng-app="app" ng-cloak ppt-preview>
+    <div ng-controller="PPTCtrl">
+      <div class="loading {{ loading ? '':'hidden' }}">
+        <p class="text">Loading...</p>
+      </div>
+      <div ng-class="{ error: true, hidden:!state.error }">
+        <p class="text">{{ state.error }}</p>
+      </div>
+    </div>
+    <div class="preview hidden">
+      <div class="toolbar">
+        <a class="new" href="#" target="_blank" title="Open In New Window">N</a>
+        <a href="#" class="close" title="Close">X</a>
+      </div>
+      <iframe id="preview"></iframe>
+    </div>
+    <script src="vender/jquery.js"></script>
+    <script src="vender/angular.js"></script>
+    <script src="vender/remark-latest.min.js"></script>
+    <script src="ppt.js"></script>
+  </body>
+</html>
