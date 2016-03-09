@@ -1,5 +1,5 @@
 # ng-abc
-ppt slides for angularjs introduction
+live ppt slides for angularjs introduction
 
 # how to run this ppt?
 
@@ -10,3 +10,4 @@ ppt slides for angularjs introduction
 npm install && npm start
 ```
  - open the url in your browser : http://localhost:8080
+ 
